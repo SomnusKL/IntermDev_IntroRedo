@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class move : MonoBehaviour
 {
@@ -123,11 +124,18 @@ public class move : MonoBehaviour
             dialogue.GetComponentInChildren<TextMeshProUGUI>().text = dialogLines[2];
         }
         
+        if (other.gameObject.name == "exit")
+        {
+            dialogue.SetActive(false);
+            SceneManager.LoadScene("GameEnd");
+        }
+        
     }
     
     public static Vector2 Target()
         {
             return _position;
+            
         }
         
 }
