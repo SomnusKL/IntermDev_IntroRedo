@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class move : MonoBehaviour
 {
@@ -8,10 +9,26 @@ public class move : MonoBehaviour
     public Rigidbody2D rb;
     public Animator animator;
     private static Vector3 _position;
+    private float distance1;
+    private float distance2;
+    public GameObject npc1;
+    public GameObject npc2;
+    
+     public GameObject dialogue;
+     private bool haveKey;
+     
+     
+     public static string[] dialogLines = new string[3]
+     {
+         "NPC 1 : XXXXXX",
+         "NPC 1 (HAVE THE KEY) : XXXXXX",
+         "NPC 2 : XXXXXX:"
+     };
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        dialogue.SetActive(false);
     }
 
     // Update is called once per frame
@@ -61,6 +78,51 @@ public class move : MonoBehaviour
         }
        
         _position = transform.position;
+        
+    }
+    
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        Debug.Log(other.gameObject.name);
+
+        if (other.gameObject.name == "key")
+        {
+            haveKey = true;
+            Destroy(other.gameObject);
+        }
+        
+        if (other.gameObject.name == "door" && haveKey)
+        {
+            Destroy(other.gameObject);
+        }
+
+    
+        if (other.gameObject.name == "npc1")
+        {
+           
+            
+            if (haveKey)
+            {
+                // get key
+                dialogue.SetActive(true);
+                dialogue.GetComponentInChildren<TextMeshProUGUI>().text = dialogLines[1];
+              
+            }
+
+            else
+            {
+                // not get key
+                dialogue.SetActive(true);
+                dialogue.GetComponentInChildren<TextMeshProUGUI>().text = dialogLines[0];
+               
+            }
+        }
+        if (other.gameObject.name == "npc2")
+        {
+            dialogue.SetActive(true);
+            dialogue.GetComponentInChildren<TextMeshProUGUI>().text = dialogLines[2];
+        }
+        
     }
     
     public static Vector2 Target()
