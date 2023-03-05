@@ -14,6 +14,7 @@ public class move : MonoBehaviour
     private float distance2;
     public GameObject npc1;
     public GameObject npc2;
+    public float dialogueOffset = 2.0f;
     
      public GameObject dialogue;
      private bool haveKey;
@@ -21,9 +22,9 @@ public class move : MonoBehaviour
      
      public static string[] dialogLines = new string[3]
      {
-         "NPC 1 : XXXXXX",
-         "NPC 1 (HAVE THE KEY) : XXXXXX",
-         "NPC 2 : XXXXXX:"
+         "I think I dropped the key somewhere east of here",
+         "Great. My friend will tell you how to escape this place",
+         "The exit is north of here, hidden behind a tree."
      };
 
     // Start is called before the first frame update
@@ -100,11 +101,10 @@ public class move : MonoBehaviour
     
         if (other.gameObject.name == "npc1")
         {
-           
-            
             if (haveKey)
             {
                 // get key
+               
                 dialogue.SetActive(true);
                 dialogue.GetComponentInChildren<TextMeshProUGUI>().text = dialogLines[1];
               
@@ -113,6 +113,7 @@ public class move : MonoBehaviour
             else
             {
                 // not get key
+                
                 dialogue.SetActive(true);
                 dialogue.GetComponentInChildren<TextMeshProUGUI>().text = dialogLines[0];
                
@@ -120,6 +121,7 @@ public class move : MonoBehaviour
         }
         if (other.gameObject.name == "npc2")
         {
+           
             dialogue.SetActive(true);
             dialogue.GetComponentInChildren<TextMeshProUGUI>().text = dialogLines[2];
         }
@@ -131,6 +133,8 @@ public class move : MonoBehaviour
         }
         
     }
+
+    
     
     public static Vector2 Target()
         {
