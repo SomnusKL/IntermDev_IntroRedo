@@ -62,4 +62,10 @@ public class move : MonoBehaviour
        
         _position = transform.position;
     }
+    
+    public static Vector2 Target()
+        {
+            return _position;
+        }
+        
 }
